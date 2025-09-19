@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+	<meta charset="UTF-8" />
+	<title>99 Fight - 乘法記憶遊戲</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+	<h1>99 Fight</h1>
+	<div id="topBar">
+		<div id="battleArea">
+			<div class="card entity" id="playerCard">
+				<div class="avatar" id="playerAvatar">👦</div>
+				<div class="hp-bar"><div class="hp-fill" id="playerHpFill"></div><div class="hp-text" id="playerHpText"></div></div>
+			</div>
+			<div class="card entity" id="monsterCard">
+				<div class="avatar" id="monsterAvatar">👾</div>
+				<div class="hp-bar"><div class="hp-fill" id="monsterHpFill" style="background:linear-gradient(90deg,var(--danger),#ff867f)"></div><div class="hp-text" id="monsterHpText"></div></div>
+			</div>
+		</div>
+		<div class="card" id="controls">
+			<div>
+				<label for="rowsInput">列數 (rows)</label>
+				<input id="rowsInput" type="number" min="4" max="10" value="6" />
+			</div>
+			<div>
+				<label for="colsInput">行數 (cols)</label>
+				<input id="colsInput" type="number" min="4" max="10" value="6" />
+			</div>
+			<div>
+				<label for="monsterIntervalInput">怪獸攻擊間隔 (秒)</label>
+				<input id="monsterIntervalInput" type="number" min="2" max="15" value="5" />
+			</div>
+			<div>
+				<label for="playerHpInput">玩家初始 HP</label>
+				<input id="playerHpInput" type="number" min="20" max="300" value="100" />
+			</div>
+			<div>
+				<label for="monsterHpInput">怪獸初始 HP</label>
+				<input id="monsterHpInput" type="number" min="20" max="300" value="120" />
+			</div>
+			<div style="display:flex; gap:.5rem; margin-top:.25rem; align-items:center;">
+				<button id="startBtn" class="primary">開始</button>
+				<button id="resetBtn" disabled>重置</button>
+				<button id="hintBtn" disabled>提示</button>
+				<div style="margin-left:auto; font-size:.8rem; opacity:.9;">可行組合：<span id="solutionCounter">-</span></div>
+			</div>
+		</div>
+
+
+	<div id="gridWrapper">
+		<div id="grid"></div>
+		<div id="overlayMessage">
+			<div id="finalText"></div>
+			<button id="playAgainBtn">再玩一次</button>
+		</div>
+	</div>
+
+	<div class="card" style="margin-top:1rem; max-width:680px; width:92vw;">
+		<div id="log"></div>
+	</div>
+
+	<script type="module" src="./src/main.js"></script>
+</body>
+</html>
