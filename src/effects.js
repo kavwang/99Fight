@@ -1,6 +1,6 @@
 // Lightweight PixiJS overlay for battle effects (mobile-friendly)
-// ESM import from CDN to avoid bundler requirements
-import * as PIXI from 'https://unpkg.com/pixi.js@7.x/dist/pixi.mjs';
+// Dynamically import PixiJS from CDN so failures don't break the game
+let PIXI = null;
 
 let app = null;
 let root = null;
@@ -14,11 +14,14 @@ function resizeToWrapper(){
   app.renderer.resize(w, h);
 }
 
-export function initEffects(els){
+export async function initEffects(els){
   try{
     if(app) return; // already initialized
     wrapper = document.getElementById('gridWrapper');
     if(!wrapper) return;
+    if(!PIXI){
+      PIXI = await import('https://unpkg.com/pixi.js@7.x/dist/pixi.mjs');
+    }
     app = new PIXI.Application({
       width: wrapper.clientWidth || 300,
       height: wrapper.clientHeight || 300,

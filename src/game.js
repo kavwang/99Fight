@@ -2,6 +2,7 @@ import { generateTriple, isValidTriple, countSolutionsFromCells, areAdjacent } f
 import { updateHpBars, log, updateSolutionCounter, clearHints, findOneSolution, ensureSolvableBoard } from './ui.js';
 import { initAudio, playSpawnSound } from './audio.js';
 import { initEffects, destroyEffects, playMatchBurstAtCell, playMonsterHit, playPlayerHit, showCombo } from './effects.js';
+import { initBattle, destroyBattle, battleSpawnAtElement, battleHeroAttack, battleMonsterAttack, battleComboThreshold } from './battle.js';
 
 export function createInitialState(){
   return {
@@ -161,6 +162,7 @@ export function attachGridHandlers(els, state){
         state.selected.forEach(c=>c.classList.add('match'));
         const matched = [...state.selected];
         try{ matched.forEach(c => playMatchBurstAtCell(c)); }catch{}
+        try{ matched.forEach(c => battleSpawnAtElement(c)); }catch{}
         performPlayerAttack(els, state, triple, matched.length);
         setTimeout(()=>{
           const idxs = matched.map(c=> parseInt(c.dataset.index,10));
@@ -190,6 +192,7 @@ export function performPlayerAttack(els, state, triple){
     setTimeout(()=>els.monsterAvatar && els.monsterAvatar.classList.remove('shake'),500);
   }
   try{ playMonsterHit(els); showCombo(state.combo, els.monsterAvatar); }catch{}
+  try{ battleHeroAttack(els, state.combo, dmg); battleComboThreshold(els, state.combo); }catch{}
   if(!checkEnd(els, state)){
     // placeholder for reward hooks
   }
@@ -205,6 +208,7 @@ export function monsterAttack(els, state){
     setTimeout(()=>els.playerAvatar && els.playerAvatar.classList.remove('shake'),500);
   }
   try{ playPlayerHit(els); }catch{}
+  try{ battleMonsterAttack(els, dmg); }catch{}
   checkEnd(els, state);
 }
 
@@ -216,6 +220,7 @@ export function startMonsterTimer(els, state){
 export function startGame(els, state){
   applyInputs(els, state); initGridStructure(els, state); initAudio();
   try{ initEffects(els); }catch{}
+  try{ initBattle(els); }catch{}
   fillAllCells(els);
   attachGridHandlers(els, state);
   ensureSolvableBoard(els, state, ()=>reshuffleBoard(els, state));
@@ -247,6 +252,7 @@ export function resetGame(els, state){
   if(els.solutionCounter) els.solutionCounter.textContent='-';
   log(els.log, '已重置。');
   try{ destroyEffects(); }catch{}
+  try{ destroyBattle(); }catch{}
 }
 
 export function bindGlobalButtons(els, state){
