@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges">
+  
+  <!-- Hero body -->
+  <rect x="11" y="12" width="10" height="10" fill="#2b7fc0"/>
+  <rect x="12" y="22" width="8" height="4" fill="#2b7fc0"/>
+  <!-- Head -->
+  <rect x="12" y="6" width="8" height="6" fill="#f3c9a2"/>
+  <!-- Hair -->
+  <rect x="12" y="5" width="8" height="2" fill="#6b3f1f"/>
+  <rect x="11" y="6" width="2" height="2" fill="#6b3f1f"/>
+  <rect x="18" y="6" width="2" height="2" fill="#6b3f1f"/>
+  <!-- Eyes -->
+  <rect x="13" y="8" width="2" height="2" fill="#0d1b2a"/>
+  <rect x="17" y="8" width="2" height="2" fill="#0d1b2a"/>
+  <!-- Sword (big) -->
+  <rect x="21" y="9" width="9" height="2" fill="#c9d1d9"/>
+  <rect x="20" y="8" width="2" height="4" fill="#8b9aa8"/>
+  <rect x="19" y="10" width="1" height="2" fill="#d4a373"/>
+  <!-- Arms -->
+  <rect x="10" y="14" width="2" height="4" fill="#f3c9a2"/>
+  <rect x="20" y="14" width="2" height="3" fill="#f3c9a2"/>
+  <!-- Boots -->
+  <rect x="12" y="26" width="3" height="2" fill="#3a2d21"/>
+  <rect x="17" y="26" width="3" height="2" fill="#3a2d21"/>
+</svg>

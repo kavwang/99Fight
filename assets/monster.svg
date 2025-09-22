@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="m" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#ff7b7b"/>
+      <stop offset="1" stop-color="#d33a3a"/>
+    </linearGradient>
+  </defs>
+  
+  <g transform="translate(64 64)">
+    <circle r="46" fill="url(#m)"/>
+    <circle r="46" fill="none" stroke="#ffffff" opacity=".06"/>
+    <!-- horns -->
+    <path d="M -28 -30 C -36 -44, -18 -46, -12 -36" fill="#ffcdd2"/>
+    <path d="M 28 -30 C 36 -44, 18 -46, 12 -36" fill="#ffcdd2"/>
+    <!-- eyes -->
+    <ellipse cx="-15" cy="-6" rx="7" ry="9" fill="#fff"/>
+    <ellipse cx="15" cy="-6" rx="7" ry="9" fill="#fff"/>
+    <circle cx="-15" cy="-3" r="3.2" fill="#2b0f0f"/>
+    <circle cx="15" cy="-3" r="3.2" fill="#2b0f0f"/>
+    <!-- mouth -->
+    <path d="M -18 16 C -6 24, 6 24, 18 16" fill="none" stroke="#2b0f0f" stroke-width="6" stroke-linecap="round"/>
+    <path d="M -12 14 L -8 20 M -2 22 L 2 16 M 8 20 L 12 14" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>

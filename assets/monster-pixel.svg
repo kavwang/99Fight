@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges">
+  
+  <!-- Body -->
+  <rect x="8" y="10" width="16" height="14" fill="#ff6868"/>
+  <!-- Ears/Horns -->
+  <rect x="8" y="8" width="3" height="3" fill="#ffc0c0"/>
+  <rect x="21" y="8" width="3" height="3" fill="#ffc0c0"/>
+  <!-- Eyes -->
+  <rect x="12" y="14" width="3" height="3" fill="#fff"/>
+  <rect x="17" y="14" width="3" height="3" fill="#fff"/>
+  <rect x="13" y="15" width="1" height="1" fill="#2b0f0f"/>
+  <rect x="18" y="15" width="1" height="1" fill="#2b0f0f"/>
+  <!-- Mouth -->
+  <rect x="12" y="19" width="8" height="2" fill="#2b0f0f"/>
+  <rect x="13" y="19" width="1" height="1" fill="#fff"/>
+  <rect x="16" y="19" width="1" height="1" fill="#fff"/>
+  <rect x="19" y="19" width="1" height="1" fill="#fff"/>
+  <!-- Feet -->
+  <rect x="10" y="24" width="3" height="2" fill="#a33"/>
+  <rect x="19" y="24" width="3" height="2" fill="#a33"/>
+</svg>

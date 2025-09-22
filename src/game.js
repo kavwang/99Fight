@@ -3,6 +3,7 @@ import { updateHpBars, log, updateSolutionCounter, clearHints, findOneSolution, 
 import { initAudio, playSpawnSound } from './audio.js';
 import { initEffects, destroyEffects, playMatchBurstAtCell, playMonsterHit, playPlayerHit, showCombo } from './effects.js';
 import { initBattle, destroyBattle, battleSpawnAtElement, battleHeroAttack, battleMonsterAttack, battleComboThreshold } from './battle.js';
+import { initBattleView, destroyBattleView, bvHeroAttack, bvMonsterAttack, bvComboThreshold } from './battleview.js';
 
 export function createInitialState(){
   return {
@@ -82,10 +83,7 @@ export function collapseColumn(els, state, c){
     const triple = generateTriple();
     const v = triple[Math.floor(Math.random()*3)];
     cell.dataset.value = v; cell.textContent = v;
-    // animation + sound
-    cell.classList.add('spawn');
-    const onEnd = ()=>{ cell.classList.remove('spawn'); cell.removeEventListener('animationend', onEnd); };
-    cell.addEventListener('animationend', onEnd);
+    // sound only (spawn animation removed)
     playSpawnSound(520 - r*25);
   }
 }
@@ -170,7 +168,7 @@ export function attachGridHandlers(els, state){
           state.selected=[];
           applyGravity(els, state, idxs);
           updateSolutionCounter(els, state);
-        },450);
+        },120);
       } else {
         log(els.log, '不是有效的乘法組合。');
         setTimeout(()=>{ state.selected.forEach(c=>c.classList.remove('selected')); state.selected=[]; },400);
@@ -193,6 +191,7 @@ export function performPlayerAttack(els, state, triple){
   }
   try{ playMonsterHit(els); showCombo(state.combo, els.monsterAvatar); }catch{}
   try{ battleHeroAttack(els, state.combo, dmg); battleComboThreshold(els, state.combo); }catch{}
+  try{ bvHeroAttack(dmg, state.combo); bvComboThreshold(state.combo); }catch{}
   if(!checkEnd(els, state)){
     // placeholder for reward hooks
   }
@@ -209,6 +208,7 @@ export function monsterAttack(els, state){
   }
   try{ playPlayerHit(els); }catch{}
   try{ battleMonsterAttack(els, dmg); }catch{}
+  try{ bvMonsterAttack(dmg); }catch{}
   checkEnd(els, state);
 }
 
@@ -221,6 +221,7 @@ export function startGame(els, state){
   applyInputs(els, state); initGridStructure(els, state); initAudio();
   try{ initEffects(els); }catch{}
   try{ initBattle(els); }catch{}
+  try{ initBattleView(); }catch{}
   fillAllCells(els);
   attachGridHandlers(els, state);
   ensureSolvableBoard(els, state, ()=>reshuffleBoard(els, state));
@@ -253,6 +254,7 @@ export function resetGame(els, state){
   log(els.log, '已重置。');
   try{ destroyEffects(); }catch{}
   try{ destroyBattle(); }catch{}
+  try{ destroyBattleView(); }catch{}
 }
 
 export function bindGlobalButtons(els, state){

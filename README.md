@@ -31,3 +31,17 @@
 - 遊戲狀態集中在 `state` 物件。事件綁定在開始時建立。
 
 祝玩得開心，練好乘法！
+
+## 視覺與戰鬥效果
+
+- 棋盤內效果：Canvas 2D 粒子/拋射物/飄字（`src/battle.js`）
+- 可選 Pixi 效果：動態載入，載入失敗不會中斷（`src/effects.js`）
+- 專用戰鬥畫面：16:9 Canvas 場景（`src/battleview.js`），顯示角色、攻擊、飄字與波紋
+
+### 美術素材建議來源（免授權或寬鬆授權）
+
+- Kenney.nl（CC0）: https://kenney.nl/assets
+- Game-Icons.net（CC BY 3.0）: https://game-icons.net/
+- OpenGameArt.org（多種授權）: https://opengameart.org/
+
+本專案預設使用自繪 SVG：`assets/hero.svg`, `assets/monster.svg`，無外部版權疑慮。你可替換成喜歡的圖片（PNG/SVG），檔名保持不變或調整 `src/battleview.js` 的載入路徑即可。
