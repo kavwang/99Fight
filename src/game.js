@@ -1,6 +1,7 @@
 import { generateTriple, isValidTriple, countSolutionsFromCells, areAdjacent } from './utils.js';
 import { updateHpBars, log, updateSolutionCounter, clearHints, findOneSolution, ensureSolvableBoard } from './ui.js';
 import { initAudio, playSpawnSound } from './audio.js';
+import { initEffects, destroyEffects, playMatchBurstAtCell, playMonsterHit, playPlayerHit, showCombo } from './effects.js';
 
 export function createInitialState(){
   return {
@@ -159,6 +160,7 @@ export function attachGridHandlers(els, state){
         log(els.log, `成功: ${triple.a} x ${triple.b} = ${triple.c}`);
         state.selected.forEach(c=>c.classList.add('match'));
         const matched = [...state.selected];
+        try{ matched.forEach(c => playMatchBurstAtCell(c)); }catch{}
         performPlayerAttack(els, state, triple, matched.length);
         setTimeout(()=>{
           const idxs = matched.map(c=> parseInt(c.dataset.index,10));
@@ -187,6 +189,7 @@ export function performPlayerAttack(els, state, triple){
     els.monsterAvatar.classList.add('shake');
     setTimeout(()=>els.monsterAvatar && els.monsterAvatar.classList.remove('shake'),500);
   }
+  try{ playMonsterHit(els); showCombo(state.combo, els.monsterAvatar); }catch{}
   if(!checkEnd(els, state)){
     // placeholder for reward hooks
   }
@@ -201,6 +204,7 @@ export function monsterAttack(els, state){
     els.playerAvatar.classList.add('shake');
     setTimeout(()=>els.playerAvatar && els.playerAvatar.classList.remove('shake'),500);
   }
+  try{ playPlayerHit(els); }catch{}
   checkEnd(els, state);
 }
 
@@ -211,6 +215,7 @@ export function startMonsterTimer(els, state){
 
 export function startGame(els, state){
   applyInputs(els, state); initGridStructure(els, state); initAudio();
+  try{ initEffects(els); }catch{}
   fillAllCells(els);
   attachGridHandlers(els, state);
   ensureSolvableBoard(els, state, ()=>reshuffleBoard(els, state));
@@ -241,6 +246,7 @@ export function resetGame(els, state){
   clearHints(els, state);
   if(els.solutionCounter) els.solutionCounter.textContent='-';
   log(els.log, '已重置。');
+  try{ destroyEffects(); }catch{}
 }
 
 export function bindGlobalButtons(els, state){
