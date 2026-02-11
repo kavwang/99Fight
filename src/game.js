@@ -188,7 +188,12 @@ export function performPlayerAttack(els, state, triple){
     setTimeout(()=>els.monsterAvatar && els.monsterAvatar.classList.remove('shake'),500);
   }
   if(!checkEnd(els, state)){
-    // placeholder for reward hooks
+    if(state.combo > 0 && state.combo % 5 === 0){
+      const heal = 10;
+      state.playerHp = Math.min(state.playerMaxHp, state.playerHp + heal);
+      updateHpBars(els, state);
+      log(els.log, `連擊獎勵! 恢復 ${heal} HP`);
+    }
   }
 }
 
