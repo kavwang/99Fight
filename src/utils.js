@@ -49,15 +49,43 @@ export function areAdjacent(indices, rows, cols){
   return visited.size === set.size;
 }
 
+function getNeighbors(idx, rows, cols) {
+  const r = Math.floor(idx / cols);
+  const c = idx % cols;
+  const neighbors = [];
+  if (r > 0) neighbors.push((r - 1) * cols + c);
+  if (r < rows - 1) neighbors.push((r + 1) * cols + c);
+  if (c > 0) neighbors.push(r * cols + (c - 1));
+  if (c < cols - 1) neighbors.push(r * cols + (c + 1));
+  return neighbors;
+}
+
+function areIndicesAdjacent(idx1, idx2, cols) {
+  const r1 = Math.floor(idx1 / cols);
+  const c1 = idx1 % cols;
+  const r2 = Math.floor(idx2 / cols);
+  const c2 = idx2 % cols;
+  return Math.abs(r1 - r2) + Math.abs(c1 - c2) === 1;
+}
+
 export function countSolutionsFromCells(cells, rows, cols, limit=9999){
   const n=cells.length; if(n<3) return 0;
   const vals = cells.map(c=>parseInt(c.dataset.value,10));
   let found=0;
-  for(let i=0;i<n-2;i++){
-    for(let j=i+1;j<n-1;j++){
-      for(let k=j+1;k<n;k++){
-        if(!areAdjacent([i,j,k], rows, cols)) continue;
-        const arr=[vals[i],vals[j],vals[k]];
+
+  for (let u = 0; u < n; u++) {
+    const neighbors = getNeighbors(u, rows, cols);
+    for (let i = 0; i < neighbors.length; i++) {
+      const v = neighbors[i];
+      for (let j = i + 1; j < neighbors.length; j++) {
+        const w = neighbors[j];
+
+        // If triangle, ensure unique counting by requiring u to be the smallest index
+        if (areIndicesAdjacent(v, w, cols)) {
+          if (!(u < v && u < w)) continue;
+        }
+
+        const arr = [vals[u], vals[v], vals[w]];
         for(let x=0;x<3;x++) for(let y=0;y<3;y++) if(y!==x){
           for(let z=0;z<3;z++) if(z!==x && z!==y){
             if(arr[x]*arr[y]===arr[z]){ found++; if(found>=limit) return found; }
@@ -72,14 +100,18 @@ export function countSolutionsFromCells(cells, rows, cols, limit=9999){
 export function findOneSolutionFromCells(cells, rows, cols){
   const n=cells.length; if(n<3) return null;
   const vals = cells.map(c=>parseInt(c.dataset.value,10));
-  for(let i=0;i<n-2;i++){
-    for(let j=i+1;j<n-1;j++){
-      for(let k=j+1;k<n;k++){
-        if(!areAdjacent([i,j,k], rows, cols)) continue;
-        const arr=[vals[i],vals[j],vals[k]];
+
+  for (let u = 0; u < n; u++) {
+    const neighbors = getNeighbors(u, rows, cols);
+    for (let i = 0; i < neighbors.length; i++) {
+      const v = neighbors[i];
+      for (let j = i + 1; j < neighbors.length; j++) {
+        const w = neighbors[j];
+
+        const arr=[vals[u],vals[v],vals[w]];
         for(let x=0;x<3;x++) for(let y=0;y<3;y++) if(y!==x){
           for(let z=0;z<3;z++) if(z!==x && z!==y){
-            if(arr[x]*arr[y]===arr[z]) return [i,j,k];
+            if(arr[x]*arr[y]===arr[z]) return [u,v,w];
           }
         }
       }
