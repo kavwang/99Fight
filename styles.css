@@ -24,7 +24,13 @@ button {cursor:pointer; font-weight:600; letter-spacing:1px;}
 button.primary {background:var(--accent); color:#222; border-color:#e9b114;}
 button.primary:active {transform:translateY(1px);}    
 #log {max-width:420px; max-height:130px; overflow:auto; font-size:.7rem; background:var(--panel); padding:.4rem .6rem; border-radius:8px; line-height:1.2;}
-#battleArea {display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap; margin-top:.5rem;}
+#battleArea {display:flex; gap:1rem; justify-content:center; align-items:flex-start; flex-wrap:wrap; margin-top:.5rem;}
+
+/* Battle View block */
+.battle-view-card {margin-top: 0; width:min(640px, 82vw);} 
+#battleView {position: relative; width:100%; aspect-ratio:16/9; background:linear-gradient(180deg,#0f1a28,#152840); border-radius:12px; overflow:hidden; box-shadow:inset 0 0 30px rgba(0,0,0,.35);} 
+#battleView canvas {position:absolute; inset:0; width:100%; height:100%;}
+#battleView canvas {image-rendering: pixelated; image-rendering: crisp-edges;}
 
 /* Grid */
 #gridWrapper {margin-top:1rem; background:var(--panel); padding:1rem; border-radius:20px; width:var(--grid-size); max-width:92vw; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 20px rgba(0,0,0,.55); position:relative;}
@@ -32,11 +38,11 @@ button.primary:active {transform:translateY(1px);}
 .cell {background:#22405c; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:clamp(.8rem,3.2vmin,1.6rem); font-weight:600; user-select:none; cursor:pointer; position:relative; transition:transform .15s, background .25s, box-shadow .25s; box-shadow:0 2px 4px rgba(0,0,0,.4);}    
 .cell:hover {background:#2c5679;}
 .cell.selected {background:#ffca28; color:#1b2a38; box-shadow:0 0 0 3px #ffd95e, 0 4px 10px rgba(0,0,0,.6);}
-.cell.match {animation:popOut .5s forwards;}
+.cell.match {animation:none;}
 .cell.hint {outline:3px solid #ff5252; box-shadow:0 0 6px 3px rgba(255,82,82,.55);} 
 .cell.falling {transition: transform .18s ease-out;}
 /* 新生成方塊自上方掉入動畫 */
-.cell.spawn {animation: dropIn .22s ease-out forwards; transform: translateY(-120%);} 
+.cell.spawn {animation:none; transform:none;}
 @keyframes dropIn { from { transform: translateY(-120%); opacity: .9;} to { transform: translateY(0); opacity: 1; } }
 @keyframes popOut {0%{transform:scale(1);} 60%{transform:scale(1.25) rotate(5deg);} 100%{transform:scale(0) rotate(-12deg); opacity:0;}}
 .shake {animation:shake .5s;} @keyframes shake {10%,90%{transform:translateX(-2px);} 20%,80%{transform:translateX(4px);} 30%,50%,70%{transform:translateX(-6px);} 40%,60%{transform:translateX(6px);}}
@@ -48,4 +54,5 @@ button.primary:active {transform:translateY(1px);}
   .avatar {width:60px; height:60px; font-size:1.5rem;}
   .hp-bar {width:120px;}
   #battleArea {gap:.75rem;}
+  .battle-view-card {width: 90vw;}
 }
